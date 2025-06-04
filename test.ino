@@ -72,7 +72,9 @@ void setup() {
   if (myFile) {
     Serial.println("Writing to file...");
     //Write to file
-    myFile println("Testing text 1, 2 ,3..."
+    myFile.println("Testing text 1, 2 ,3...");
+    myFile.close();
+    Serial.println("Done.")
   }
   // read the file
   myFile = SD.open("test.txt");
@@ -83,7 +85,11 @@ void setup() {
       Serial.write(myFile.read());
     }
     myFile.close();
-    else {
-      Serial.println("error opening text.txt")
+  } 
+  else {
+      Serial.println("error opening text.txt");
     }
+}
+void loop() {
+  //empty
 }
