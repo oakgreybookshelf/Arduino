@@ -93,3 +93,38 @@ void setup() {
 void loop() {
   //empty
 }
+
+#include <SD.h>
+#include <SPI.h>
+#include <DS3231.h>
+
+File myFile;
+DS3231 rtc(SDA, SCL);
+
+int pinCS = 53; //Pin 10 on Arduino Uno
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(pinCS, OUTPUT);
+
+  //SD Card Initialization
+  if (SD begin())
+  {
+    Serial.println("SD card is ready to use.");
+  } else
+  {
+    Serial.println("SD card initialiozation failed.");
+    return;
+  }
+  rtc.begin();
+}
+void loop() {
+  Serial.print(rtc.getTimeStr());
+  Serial.print(",");
+  Serial.println(int(rtc.getTemp()));
+
+  myFile = SD.open("test.txt", FILE_WRITE);
+  if (myfile) {
+    myFile.print(rtc.getTimeStr());
+  }
+}
